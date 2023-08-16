@@ -1,0 +1,10 @@
+credentials:
+  usernames:
+    bses:
+      email: bisheshkafle18@gmail.com
+      name: Bishesh Kafle
+      password: $2b$12$bTwG6nMldQ3CpNMPzpVbWOQ8w0p2EES4YeOesfFp2vnqNcWsRHg1a # To be replaced with hashed password
+cookie:
+  expiry_days: 1
+  key: random_signature_key # Must be string
+  name: random_cookie_name
