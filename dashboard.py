@@ -47,10 +47,10 @@ if authentication_status:
     attemp_grp.columns = ['Attempted or Raped','No. of cases']
     col1,col2 = st.columns(2)
     fig_pie = px.pie(type_grp, values = 'No. of cases', names='Type of Attack',
-                     title = '<span style="color:yellow">Pie chart showing Types of Attack</span>',width= 500,color_discrete_sequence=px.colors.qualitative.Bold)
+                     title = '<span style="color:yellow">Pie chart showing attack categories.</span>',width= 500,color_discrete_sequence=px.colors.qualitative.Bold)
     fig_pie.update_traces(textposition = "outside", hoverinfo = 'value' )
     fig_pie2 = px.pie(attemp_grp, values = 'No. of cases', names='Attempted or Raped',
-                     title = '<span style="color:yellow">Pie chart showing category of attack</span>',width= 500,color_discrete_sequence=px.colors.qualitative.Bold)
+                     title = '<span style="color:yellow">Pie chart showing the types of attack.</span>',width= 500,color_discrete_sequence=px.colors.qualitative.Bold)
     fig_pie2.update_traces(textposition = "outside", hoverinfo = 'value' )
     col1.plotly_chart(fig_pie)
     col2.plotly_chart(fig_pie2)
@@ -81,7 +81,15 @@ a broader focus on all aspects of national events, whereas targeted news sources
 
     fig2 = px.line(ts, title = 'Line plot of Sources by time', color = 'Source', markers = True,width=850) #text="value")
     fig2.update_layout(xaxis = dict(showline=False,showgrid=False),xaxis_range = (2013,2022))
-    fig2.update_traces(visible = 'legendonly')
     expander_2 = st.expander('Analysis -- Sources over Time')
     expander_2.markdown('<p style = "color:yellow">Click on legend to show the lines.</p>',unsafe_allow_html=True)
     expander_2.plotly_chart(fig2)
+    expander_2.markdown('''
+<p style = 'color:Yellow'><b>Analysis</b></p>
+<p>The line plot represents the coverage of news sources related to sexual assaults over a span of ten years, from 2013 to 2022, with time (years) on the x-axis and the number of records covered by various news sources on the y-axis. The plot provides valuable insights into the trends and patterns in media reporting on sexual assault incidents in Nepal.</p>
+<p>At the outset, it is evident that the data reveals distinct trends for different news sources. The Nepal Police exhibits a notable peak in coverage in the year 2020, suggesting that this was a year when sexual assault incidents were prominently covered and reported by this source. However, this peak is followed by a consistent decrease in coverage in the subsequent years, indicating a potential decline in the frequency of reported incidents or a shift in the focus of the Nepal Police's reporting.</p>
+<p>Another significant contributor to the coverage of sexual assault incidents is INSECOnline. The data highlights a rising trend in coverage from the base year of 2013, reaching its peak around 2021. This indicates that INSECOnline's reporting gained momentum over the years, culminating in a substantial amount of coverage in 2021. However, a slight decrease in coverage is observed in the following year (2022), suggesting a potential change in reporting strategies or a fluctuation in the incidence of sexual assault cases.</p>
+<p>In contrast, Nepal Monitor starts off with relatively passive coverage until 2019. However, the data illustrates an upward trend in coverage from 2019 onwards. This upward trajectory indicates an increased emphasis on reporting sexual assault incidents by Nepal Monitor in recent years, possibly due to shifting societal awareness or changes in their reporting methodologies.</p>
+<p>The analysis also identifies other news sources that appear to maintain a more consistent or passive level of coverage throughout the ten-year period. These sources might indicate a stable approach to reporting sexual assault incidents or might reflect the lack of significant changes in their reporting strategies over the years.</p>
+<p>Overall, the line plot demonstrates the dynamic nature of media reporting on sexual assault incidents in Nepal. Peaks and troughs in coverage from different news sources reflect shifts in priorities, societal awareness, and reporting methodologies. The analysis highlights the importance of considering multiple news sources to gain a comprehensive understanding of trends in sexual assault reporting and to identify potential changes in the prevalence of such incidents over time. Further exploration of contextual factors and correlations with real-world events could provide deeper insights into the patterns observed in the line plot.</p>
+''',unsafe_allow_html=True)
