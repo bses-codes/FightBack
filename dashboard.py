@@ -93,3 +93,29 @@ a broader focus on all aspects of national events, whereas targeted news sources
 <p>Overall, the line plot demonstrates the dynamic nature of media reporting on sexual assault incidents in Nepal. Peaks and troughs in coverage from different news sources reflect shifts in priorities, societal awareness, and reporting methodologies. The analysis highlights the importance of considering multiple news sources to gain a comprehensive understanding of trends in sexual assault reporting and to identify potential changes in the prevalence of such incidents over time. Further exploration of contextual factors and correlations with real-world events could provide deeper insights into the patterns observed in the line plot.</p>
 ''',unsafe_allow_html=True)
     
+    st.write('''
+    ### Consequences of the attack
+
+    Among all the districts, we can analyze the trend and pattern which districts were highly prone to which consequences.
+    ''')
+    district_grp = pd.DataFrame(df.groupby(['Districts']).size())
+    cons_grp = pd.DataFrame(df.groupby(['Districts','Consequences of the attack']).size().unstack(fill_value=0))
+    fig = px.bar(cons_grp, title = 'Bar plot of occurence of consequences',
+             color = 'Consequences of the attack', color_discrete_sequence=['Black','Blue','Green',px.colors.qualitative.T10[5],'Red'])
+    fig.update_traces(width = 0.7)
+    fig.update_layout(title_text="<span style='color:yellow'>Bar plot of Consequences of attack</span>")
+    expander_1 = st.expander('Analysis -- Occurence of Consequences')
+    expander_1.plotly_chart(fig)
+    col1,col2 = expander_1.columns([0.38,0.62])
+    col1.markdown('<p style = "color:Yellow"><b>Dataframe</b></p>',unsafe_allow_html=True)
+    col1.dataframe(district_grp,width=380,height=420)
+    col2.markdown('''
+<p style = 'color:Yellow'><b>Analysis</b></p>
+<p>From the bar graph above representing the consequences,we observe that the highest rate of occurrence is attributed to "physical injury".
+   This indicates that survivors most commonly experience physical harm as a consequence of the crime,underlining the immediate and tangible 
+   impact on their well-being.In Kathmandu,the prevalence of consequences resulting from the data set is highest, with a notable emphasis on "Physical Injury"(almost no other consequences).</p>
+<p> As of the current data, the districts of Manang and Rukum exhibit the lowest incidence of consequences arising from rape compared to the others.</p>
+<p>Survivors often experience significant psychological and emotional trauma. Common psychological consequences include mental illness,anxiety, depression, post-traumatic stress disorder (PTSD),
+    feelings of shame, guilt, fear, and self-blame. The emotional impact can be long-lasting and may require therapy and counseling for healing.And for this,Morang stands out as a district warranting attention.
+     Similarly , we can observe other consequences in districts from the graph.</p>                               
+''',unsafe_allow_html=True)
