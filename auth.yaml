@@ -4,6 +4,10 @@ credentials:
       email: bisheshkafle18@gmail.com
       name: Bishesh Kafle
       password: $2b$12$bTwG6nMldQ3CpNMPzpVbWOQ8w0p2EES4YeOesfFp2vnqNcWsRHg1a # To be replaced with hashed password
+    anisha:
+      email: anishalamsal17@gmail.com
+      name: Anisha Lamsal
+      password : $2b$12$Qfy8hSVZoBbzfWtWaxfgIecZopAL2twuC2KXt2dYNdngNJe8ublia
 cookie:
   expiry_days: 1
   key: random_signature_key # Must be string

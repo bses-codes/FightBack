@@ -1,9 +1,7 @@
 import yaml
 from yaml.loader import SafeLoader
-from pathlib import Path
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objects as go
 import streamlit as st
 import streamlit_authenticator as stauth
 
@@ -14,7 +12,7 @@ with open('auth.yaml') as file:
 
 authenticator = stauth.Authenticate(
     config['credentials'],
-    config['cookie']['name'],
+    config['cookie']['name'],    #kaile samma logout nagarne
     config['cookie']['key'],
     config['cookie']['expiry_days']
 )
@@ -25,8 +23,7 @@ if authentication_status == None:
     st.warning('Please enter your username and password')
 if authentication_status:
     authenticator.logout('Logout', 'main')
-    if username == 'bses':
-        st.write(f'Welcome *{name}*,')
+    st.write(f'Welcome *{name}*,')
         
     df = pd.read_csv('cleandata.csv')
 
@@ -45,6 +42,7 @@ if authentication_status:
     attemp_grp = pd.DataFrame(df.groupby(['Attempted or Raped']).size())
     attemp_grp.reset_index(inplace = True)
     attemp_grp.columns = ['Attempted or Raped','No. of cases']
+
     col1,col2 = st.columns(2)
     fig_pie = px.pie(type_grp, values = 'No. of cases', names='Type of Attack',
                      title = '<span style="color:yellow">Pie chart showing attack categories.</span>',width= 500,color_discrete_sequence=px.colors.qualitative.Bold)
@@ -52,6 +50,7 @@ if authentication_status:
     fig_pie2 = px.pie(attemp_grp, values = 'No. of cases', names='Attempted or Raped',
                      title = '<span style="color:yellow">Pie chart showing the types of attack.</span>',width= 500,color_discrete_sequence=px.colors.qualitative.Bold)
     fig_pie2.update_traces(textposition = "outside", hoverinfo = 'value' )
+
     col1.plotly_chart(fig_pie)
     col2.plotly_chart(fig_pie2)
     st.write('''
@@ -60,12 +59,12 @@ if authentication_status:
     Among various sources, we can first analyze the trend and pattern in which sources were highly active in covering the topic as well as which sources were more engaged over time.
     ''')
     
-    fig = px.bar(source_grp, y = 'No. of Reports',
+    fig_bar = px.bar(source_grp, y = 'No. of Reports',
                 color = 'No. of Reports', color_continuous_scale=px.colors.sequential.Sunsetdark,width=1000)
-    fig.update_traces(width = 0.7)
-    fig.update_layout(title_text="<span style='color:yellow'>Bar plot of Stories by Sources</span>")
+    fig_bar.update_traces(width = 0.7)
+    fig_bar.update_layout(title_text="<span style='color:yellow'>Bar plot of Stories by Sources</span>")
     expander_1 = st.expander('Analysis -- Sources and Stories')
-    expander_1.plotly_chart(fig)
+    expander_1.plotly_chart(fig_bar)
     col1,col2 = expander_1.columns([0.38,0.62])
     col1.markdown('<p style = "color:Yellow"><b>Dataframe</b></p>',unsafe_allow_html=True)
     col1.dataframe(source_grp,width=380,height=420)
@@ -79,11 +78,11 @@ Khabar'—demonstrate a strong commitment to covering stories of sexual incident
 a broader focus on all aspects of national events, whereas targeted news sources concentrate solely on human rights and incidents in Nepal.</p>
 ''',unsafe_allow_html=True)
 
-    fig2 = px.line(ts, title = 'Line plot of Sources by time', color = 'Source', markers = True,width=850) #text="value")
-    fig2.update_layout(xaxis = dict(showline=False,showgrid=False),xaxis_range = (2013,2022))
+    fig_line = px.line(ts, title = 'Line plot of Sources by time', color = 'Source', markers = True,width=850) #text="value")
+    fig_line.update_layout(xaxis = dict(showline=False,showgrid=False),xaxis_range = (2013,2022))
     expander_2 = st.expander('Analysis -- Sources over Time')
     expander_2.markdown('<p style = "color:yellow">Click on legend to show the lines.</p>',unsafe_allow_html=True)
-    expander_2.plotly_chart(fig2)
+    expander_2.plotly_chart(fig_line)
     expander_2.markdown('''
 <p style = 'color:Yellow'><b>Analysis</b></p>
 <p>The line plot represents the coverage of news sources related to sexual assaults over a span of ten years, from 2013 to 2022, with time (years) on the x-axis and the number of records covered by various news sources on the y-axis. The plot provides valuable insights into the trends and patterns in media reporting on sexual assault incidents in Nepal.</p>
@@ -93,3 +92,4 @@ a broader focus on all aspects of national events, whereas targeted news sources
 <p>The analysis also identifies other news sources that appear to maintain a more consistent or passive level of coverage throughout the ten-year period. These sources might indicate a stable approach to reporting sexual assault incidents or might reflect the lack of significant changes in their reporting strategies over the years.</p>
 <p>Overall, the line plot demonstrates the dynamic nature of media reporting on sexual assault incidents in Nepal. Peaks and troughs in coverage from different news sources reflect shifts in priorities, societal awareness, and reporting methodologies. The analysis highlights the importance of considering multiple news sources to gain a comprehensive understanding of trends in sexual assault reporting and to identify potential changes in the prevalence of such incidents over time. Further exploration of contextual factors and correlations with real-world events could provide deeper insights into the patterns observed in the line plot.</p>
 ''',unsafe_allow_html=True)
+    
