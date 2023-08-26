@@ -99,9 +99,10 @@ a broader focus on all aspects of national events, whereas targeted news sources
     Among all the districts, we can analyze the trend and pattern which districts were highly prone to which consequences.
     ''')
     district_grp = pd.DataFrame(df.groupby(['Districts']).size())
+    district_grp.columns = ['No. of Incidents']
     cons_grp = pd.DataFrame(df.groupby(['Districts','Consequences of the attack']).size().unstack(fill_value=0))
     fig = px.bar(cons_grp, title = 'Bar plot of occurence of consequences',
-             color = 'Consequences of the attack', color_discrete_sequence=['Black','Blue','Green',px.colors.qualitative.T10[5],'Red'])
+             color = 'Consequences of the attack', color_discrete_sequence=['Black','Blue','Green',px.colors.qualitative.T10[5],'Red'],width=1000)
     fig.update_traces(width = 0.7)
     fig.update_layout(title_text="<span style='color:yellow'>Bar plot of Consequences of attack</span>")
     expander_1 = st.expander('Analysis -- Occurence of Consequences')
