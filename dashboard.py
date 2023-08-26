@@ -119,3 +119,31 @@ a broader focus on all aspects of national events, whereas targeted news sources
     feelings of shame, guilt, fear, and self-blame. The emotional impact can be long-lasting and may require therapy and counseling for healing.And for this,Morang stands out as a district warranting attention.
      Similarly , we can observe other consequences in districts from the graph.</p>                               
 ''',unsafe_allow_html=True)
+    df['Date of Incident'] = pd.to_datetime(df['Date of Incident'])
+    time_source = df[['Date of Incident','Districts']]
+    time_source.dropna(inplace = True)  
+    time_source['Date of Incident'] = time_source['Date of Incident'].dt.year
+    ts = time_source.groupby(['Date of Incident', 'Districts']).size().unstack(fill_value=0)
+    ts = ts.loc[:,(ts[ts.columns].sum() > 19).values]
+    fig_lin = px.line(ts, title = 'Line plot of Districts by time', color = 'Districts', markers = True,width=850) #text="value")
+    fig_lin.update_layout(xaxis = dict(showline=False,showgrid=False),xaxis_range = (2013,2022))
+    expander_2 = st.expander('Analysis -- Districts over Time')
+   # expander_2.markdown('<p style = "color:yellow">Click on legend to show the lines.</p>',unsafe_allow_html=True)
+   # expander_2.plotly_chart(fig_lin)
+   # col1,col2 = expander_1.columns([0.38,0.62])
+   # col1.markdown('<p style = "color:Yellow"><b>Dataframe</b></p>',unsafe_allow_html=True)
+    #col1.dataframe(district_grp,width=380,height=420)
+    fig_line = px.line(ts, title = 'Line plot of Districts by time', color = 'Districts', markers = True,width=850) #text="value")
+    fig_line.update_layout(xaxis = dict(showline=False,showgrid=False),xaxis_range = (2013,2022))
+    expander_2 = st.expander('Analysis -- Districts over Time')
+    expander_2.markdown('<p style = "color:yellow">Click on legend to show the lines.</p>',unsafe_allow_html=True)
+    expander_2.plotly_chart(fig_line)
+    expander_2.markdown('''
+<p style = 'color:Yellow'><b>Analysis</b></p>
+<p>The line plot represents the distribution of incidents across different districts over time.It shows how the frequency of incidents has evolved over time.It allows us to identify periods of increased or decreased incident rates,highlighting potential trends and patters.</p>
+<p>In the vast tapestry of incident data,Kathmandu emerges as an undeniable focal point,adorned with the highest number of incidents,Kathmandu's data commands attention with its significant and imposing presence.Kathmandu's prominence serves as a potential call to action,urging us to channel our energis towards creating a safer,healthier and more secure environment for all.</p>
+<p>Before the year 2021, Dang's incident data was unpredictable,with the number of incident going up and down without a clear pattern.The number of incident in Dang increased significantly,reaching the highest point ever recorded..</p>
+<p>The number of incidents in Rupanehi was going up rapidlyBut in 2020, there was a decrease in incident,providing some relief.However after that the incidents started rising again.</p>
+<p>The data from Silyan creates an intriguing pattern-despite having fewer cases compared to districts like Kathmandu, the incident counts in Silyan remains steady or show an upward trend.</p>
+<p>In conclusion,the data analysis reveals that Kathmandu has consistently high cases of incidents,which is a cause for concern.The steady trend of incidents indicates a persistent issue that demands urgent attention and effective interventions to ensure the safety.</p>                       
+''',unsafe_allow_html=True)
