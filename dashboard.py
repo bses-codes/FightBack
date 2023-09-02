@@ -76,6 +76,14 @@ if authentication_status:
     age_v = pd.DataFrame(v_age.groupby('norm_age').size())
     age_v.columns = ['Total number']
     age_v.reset_index(inplace=True)
+    
+    Time = pd.read_csv('Time.csv')
+    Time.dropna(inplace=True)
+    Time_1 = pd.read_csv("Time.csv", usecols = ['Time'])
+    time_v = pd.DataFrame(Time_1.groupby('Time').size())
+    time_v.columns = ['Total number']
+    time_v.reset_index(inplace=True)
+    time_vv=time_v.nlargest(10, ['Time'])
 
     col1,col2 = st.columns(2)
     fig_pie = px.pie(type_grp, values = 'No. of cases', names='Type of Attack',
@@ -92,12 +100,16 @@ if authentication_status:
                      title = '<span style="color:yellow">Pie chart showing victim age groups.</span>',width= 500,color_discrete_sequence=px.colors.qualitative.Bold)
     fig_pie4.update_traces(textposition = "outside", hoverinfo = 'value' )
     fig_pie4.update_layout(legend_title = 'Age groups',)
-    
+    fig_pie5 = px.pie(time_vv, values = 'Total number', names='Time',
+                     title = '<span style="color:yellow">Pie chart showing the time with high peak for cases .</span>',width= 700,color_discrete_sequence=px.colors.qualitative.Bold)
+    fig_pie5.update_traces(textposition = "outside", hoverinfo = 'value' )
+    #fig_pie5.show()
 
     col1.plotly_chart(fig_pie)
     col2.plotly_chart(fig_pie2)
     col1.plotly_chart(fig_pie3)
     col2.plotly_chart(fig_pie4)
+    st.plotly_chart(fig_pie5)
     st.write('''
     ### Sources
 
@@ -193,3 +205,26 @@ a broader focus on all aspects of national events, whereas targeted news sources
 <p>The data from Silyan creates an intriguing pattern-despite having fewer cases compared to districts like Kathmandu, the incident counts in Silyan remains steady or show an upward trend.</p>
 <p>In conclusion,the data analysis reveals that Kathmandu has consistently high cases of incidents,which is a cause for concern.The steady trend of incidents indicates a persistent issue that demands urgent attention and effective interventions to ensure the safety.</p>                       
 ''',unsafe_allow_html=True)
+    st.write('''
+    ### Time
+    Among all the time durations, we can observe the time at which the cases were high.
+    ''')
+    df_v1= pd.DataFrame(Time.groupby('District').size())
+    df_v1.columns = ['Total number']
+    df2= df_v1.sort_values(by='Total number',ascending = False)
+    df3 = df2.head(20)
+    d_is =list(df3.index)
+    df4=Time[Time['District'].isin(d_is)]
+    fig = px.scatter(df4, x="District", y="Time",color='Time')
+    expander_1 = st.expander('Analysis -- Time by District')
+    expander_1.plotly_chart(fig)
+    col1,col2 = expander_1.columns([0.38,0.62])
+    col1.markdown('<p style = "color:Yellow"><b>Dataframe</b></p>',unsafe_allow_html=True)
+    col1.dataframe(df4,width=380,height=420)
+    col2.markdown('''
+<p style = 'color:Yellow'><b>Analysis</b></p>
+<p>In our examination of incident data across various districts, a conspicuous pattern emerges, shedding light on the times when most incidents tend to occur. Two key timeframes consistently stand out as being particularly noteworthy in terms of incident frequency.</p>
+<p>2-3 AM:In almost every district under scrutiny, the period between 2 AM and 3 AM emerges as the peak time for incidents. This late-night to early-morning hour appears to be associated with a heightened risk of various events. The reasons behind this phenomenon could be multifaceted, including reduced visibility, lower presence of individuals, and potentially altered social dynamics.</p>
+<p>13-14 (1 PM - 2 PM):Another time of increased incident occurrence across the surveyed districts is between 1 PM and 2 PM, notably in contrast to the early morning lull around 5 AM - 6 AM. This suggests that, for some reason, the early afternoon presents its own set of challenges or risk factors that contribute to incidents. Perhaps factors related to daily routines or social interactions play a role during this timeframe.</p>
+<p> However, it is important to note that there is significant variation when we delve into district-specific data. In the case of Kathmandu, for instance, a different pattern emerges. Incidents in Kathmandu appear to peak between 10 PM and 2 AM, with the highest concentration of incidents occurring from 10 PM to 11 PM.</p>
+''',unsafe_allow_html=True)                                                    
