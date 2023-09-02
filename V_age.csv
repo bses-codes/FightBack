@@ -1,4 +1,4 @@
-P or V,District,Age
+V,District,Age
 V,Kathmandu,7
 V,Sindhuli,12
 V,Dolakha,7
@@ -57,7 +57,7 @@ V,Khotang,NA
 V,Khotang,15
 V,Kaski,NA
 V,Morang,NA
-V,Sunsari,28 Month
+V,Sunsari,28
 V,Terhathum,NA
 V,Jhapa,NA
 V,Sarlahi,30
@@ -239,7 +239,7 @@ V,Morang,8
 V,Kaski,5
 V,Jhapa,13
 V,Panchthar,15
-V,Kapilvastu,14 Under
+V,Kapilvastu,14
 V,Sindhupalchok,14
 V,Rukum West,16
 V,Kaski,16
@@ -330,7 +330,7 @@ V,Baitadi,NA
 V,Gorkha,9
 V,Kavrepalanchok,30
 V,Dhanusha,NA
-V,Kaski,"14,15"
+V,Kaski,14
 V,Sindhupalchok,6
 V,Jhapa,35
 V,Saptari,21
@@ -526,7 +526,7 @@ V,Siraha,14
 V,Chitwan,8
 V,Chitwan,11
 V,Tanahu,7
-V,Siraha,"18,19"
+V,Siraha,18
 V,Terhathum,17
 V,Arghakhanchi,8
 V,Bhojpur,14
@@ -714,7 +714,7 @@ V,Kathmandu,15
 V,Chitwan,28
 V,Rupandehi,19
 V,Terhathum,36
-V,Siraha,8 month
+V,Siraha,0
 V,Gulmi,14
 V,Sunsari,22
 V,Dhanusa,25
@@ -858,7 +858,7 @@ V,Surkhet,42
 V,Baglung,NA
 V,Kathmandu,9
 V,Jhapa,4
-V,Parasi,2 and Half Year
+V,Parasi,2
 V,Dadeldhura,22
 V,Lalitpur,14
 V,Kanchanpur,14
@@ -1903,7 +1903,7 @@ V,Lamjung,8
 V,Sindhupalchok,8
 V,Palpa,13
 V,Lalitpur,30
-V,Kaski,22 Month
+V,Kaski,1
 V,Udayapur,51
 V,Sindhuli,14
 V,Sindhuli,16
@@ -2199,7 +2199,7 @@ V,Jumla,13
 V,Humla,14
 V,Kapilvastu,30
 V,Nuwakot,26
-V,Kailali,"7,9"
+V,Kailali,8
 V,Mahottari,20
 V,Myagdi,7
 V,Lalitpur,30
@@ -2267,7 +2267,7 @@ V,Salyan,18
 V,Kailali,21
 V,Bhaktapur,14
 V,Kathmandu,16
-V,Rupandehi,"18,19"
+V,Rupandehi,18
 V,Tanahu,10
 V,Dang,44
 V,Kapilvastu,28

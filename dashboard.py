@@ -30,18 +30,52 @@ if authentication_status:
     df.rename(columns = {'Sources':'Source'}, inplace = True)
     source_grp = pd.DataFrame(df.groupby(['Source']).size())
     source_grp.columns = ['No. of Reports']
+    
     df['Date of Incident'] = pd.to_datetime(df['Date of Incident'],errors='coerce')
     time_source = df[['Date of Incident','Source']]
     time_source.dropna(inplace = True)  
     time_source['Date of Incident'] = time_source['Date of Incident'].dt.year
     ts = time_source.groupby(['Date of Incident', 'Source']).size().unstack(fill_value=0)
     ts = ts.loc[:,(ts[ts.columns].sum() > 19).values]
+    
     type_grp = pd.DataFrame(df.groupby(['Type of Attack']).size())
     type_grp.reset_index(inplace=True)
     type_grp.columns = ['Type of Attack','No. of cases']
+    
     attemp_grp = pd.DataFrame(df.groupby(['Attempted or Raped']).size())
     attemp_grp.reset_index(inplace = True)
     attemp_grp.columns = ['Attempted or Raped','No. of cases']
+
+    p_age = pd.read_csv('P_age.csv')
+    p_age.drop('P ',axis = 1, inplace=True)
+    p_age.dropna(inplace=True)
+    p_age['Age'] = p_age['Age'].astype('int')
+    p_age['norm_1'] = (p_age['Age']//10)*10 
+    p_age['norm_1'] = p_age['norm_1'].astype('int')
+    p_age['norm_2'] = p_age['norm_1'] + 9
+    p_age['norm_1'] = p_age['norm_1'].astype('str')
+    p_age['norm_2'] = p_age['norm_2'].astype('str')
+    p_age['norm_age'] = p_age['norm_1'] + ' - ' + p_age['norm_2']
+    p_age.drop(['norm_1','norm_2'],axis = 1,inplace=True)
+
+    age_p = pd.DataFrame(p_age.groupby('norm_age').size())
+    age_p.columns = ['Total number']    
+    age_p.reset_index(inplace=True)
+    
+    v_age = pd.read_csv('V_age.csv')
+    v_age.drop('V',axis = 1, inplace=True)
+    v_age.dropna(inplace=True)
+    v_age['Age'] = v_age['Age'].astype('int')
+    v_age['norm_1'] = (v_age['Age']//10)*10 
+    v_age['norm_1'] = v_age['norm_1'].astype('int')
+    v_age['norm_2'] = v_age['norm_1'] + 9
+    v_age['norm_1'] = v_age['norm_1'].astype('str')
+    v_age['norm_2'] = v_age['norm_2'].astype('str')
+    v_age['norm_age'] = v_age['norm_1'] + ' - ' + v_age['norm_2']
+    v_age.drop(['norm_1','norm_2'],axis = 1,inplace=True)   
+    age_v = pd.DataFrame(v_age.groupby('norm_age').size())
+    age_v.columns = ['Total number']
+    age_v.reset_index(inplace=True)
 
     col1,col2 = st.columns(2)
     fig_pie = px.pie(type_grp, values = 'No. of cases', names='Type of Attack',
@@ -50,9 +84,20 @@ if authentication_status:
     fig_pie2 = px.pie(attemp_grp, values = 'No. of cases', names='Attempted or Raped',
                      title = '<span style="color:yellow">Pie chart showing the types of attack.</span>',width= 500,color_discrete_sequence=px.colors.qualitative.Bold)
     fig_pie2.update_traces(textposition = "outside", hoverinfo = 'value' )
+    fig_pie3 = px.pie(age_p, values = 'Total number', names='norm_age',
+                     title = '<span style="color:yellow">Pie chart showing perputator age groups.</span>',width= 500,color_discrete_sequence=px.colors.qualitative.Bold)
+    fig_pie3.update_traces(textposition = "outside", hoverinfo = 'value')
+    fig_pie3.update_layout(legend_title = 'Age groups')
+    fig_pie4 = px.pie(age_v, values = 'Total number', names='norm_age',
+                     title = '<span style="color:yellow">Pie chart showing victim age groups.</span>',width= 500,color_discrete_sequence=px.colors.qualitative.Bold)
+    fig_pie4.update_traces(textposition = "outside", hoverinfo = 'value' )
+    fig_pie4.update_layout(legend_title = 'Age groups',)
+    
 
     col1.plotly_chart(fig_pie)
     col2.plotly_chart(fig_pie2)
+    col1.plotly_chart(fig_pie3)
+    col2.plotly_chart(fig_pie4)
     st.write('''
     ### Sources
 
@@ -125,7 +170,7 @@ a broader focus on all aspects of national events, whereas targeted news sources
     time_source.dropna(inplace = True)  
     time_source['Date of Incident'] = time_source['Date of Incident'].dt.year
     ts = time_source.groupby(['Date of Incident', 'Districts']).size().unstack(fill_value=0)
-    ts = ts.loc[:,(ts[ts.columns].sum() > 19).values]
+    ts = ts.loc[:,(ts[ts.columns].sum() > 70).values]
     fig_lin = px.line(ts, title = 'Line plot of Districts by time', color = 'Districts', markers = True,width=850) #text="value")
     fig_lin.update_layout(xaxis = dict(showline=False,showgrid=False),xaxis_range = (2013,2022))
     expander_2 = st.expander('Analysis -- Districts over Time')
