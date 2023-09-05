@@ -89,6 +89,13 @@ if authentication_status:
     time_v['norm_time'] = time_v['Time'] + " - " + time_v['etime']
     time_v.drop(['Time','etime'],axis = 1,inplace=True)
 
+    Caste = pd.read_csv('Caste_Data.csv')
+    Caste.dropna(inplace=True)
+    Caste_1 = pd.read_csv("Caste_Data.csv", usecols = ['Ethnicity code'])
+    Caste_v =  pd.DataFrame(Caste_1.groupby('Ethnicity code').size())
+    Caste_v.columns = ['Total number']
+    Caste_v.reset_index(inplace=True)
+
     col1,col2 = st.columns(2)
     fig_pie = px.pie(type_grp, values = 'No. of cases', names='Type of Attack',
                      title = '<span style="color:yellow">Pie chart showing attack categories.</span>',width= 500,color_discrete_sequence=px.colors.qualitative.Bold)
@@ -108,12 +115,16 @@ if authentication_status:
                      title = '<span style="color:yellow">Pie chart showing the time with high peak for cases .</span>',width= 500,color_discrete_sequence=px.colors.qualitative.Bold)
     fig_pie5.update_traces(textposition = "outside", hoverinfo = 'value' )
     #fig_pie5.show()
+    fig_pie6 = px.pie(Caste_v, values = 'Total number', names='Ethnicity code',
+                     title = '<span style="color:yellow">Pie chart showing Ethnicity.</span>',width= 500,color_discrete_sequence=px.colors.qualitative.Bold)
+    fig_pie6.update_traces(textposition = "outside", hoverinfo = 'value' )
 
     col1.plotly_chart(fig_pie)
     col2.plotly_chart(fig_pie2)
     col1.plotly_chart(fig_pie3)
     col2.plotly_chart(fig_pie4)
     col1.plotly_chart(fig_pie5)
+    col2.plotly_chart(fig_pie6)
     st.write('''
     ### Sources
 
