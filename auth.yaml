@@ -8,6 +8,10 @@ credentials:
       email: anishalamsal17@gmail.com
       name: Anisha Lamsal
       password : $2b$12$Qfy8hSVZoBbzfWtWaxfgIecZopAL2twuC2KXt2dYNdngNJe8ublia
+    fightback:
+      email:
+      name: Fightback Nepal
+      password: $2b$12$EzmDVjxk6F1nhAyevY/r4.f0ykJgPcLlGMwseZ9NuCxM8ahTzNJpW
 cookie:
   expiry_days: 1
   key: random_signature_key # Must be string

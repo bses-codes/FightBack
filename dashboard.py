@@ -24,7 +24,7 @@ if authentication_status == None:
 if authentication_status:
     authenticator.logout('Logout', 'main')
     st.write(f'Welcome *{name}*,')
-        
+    st.markdown('<hr>',unsafe_allow_html=True)    
     df = pd.read_csv('cleandata.csv')
 
     df.rename(columns = {'Sources':'Source'}, inplace = True)
@@ -96,7 +96,23 @@ if authentication_status:
     Caste_v.columns = ['Total number']
     Caste_v.reset_index(inplace=True)
 
+    caste_code = pd.read_csv('Caste_code.csv')
+
+    dis = pd.read_csv('District.csv')
+    dis.iloc[59,1] = 83.3789
+    map = px.scatter_geo(dis, lat='Latitude', lon='Longitude',width = 500, opacity = 0.3,template='plotly_dark',
+                     hover_name='Districts',color='Number', size='Number',
+                     title='<span style="color:yellow">Incidents in Nepal</span>', color_continuous_scale=px.colors.sequential.Sunsetdark)
+    map.update_layout(geo = dict(scope = 'asia',resolution = 50,lataxis_range =[25,32],lonaxis_range = [78,90]),margin={"r":0,"t":25,"l":0,"b":0})
     col1,col2 = st.columns(2)
+    col1.plotly_chart(map)
+    col2.markdown('''
+<p style = 'color:Yellow'><b>Abstract</b></p>
+<p>This report offers a comprehensive visual analysis of sexual-related cases in Nepal, shedding light on the nature, location, timing, and sources of these incidents. Through meticulously crafted pie charts and scatter plots, we examine various facets of these cases, aiming to provide a deeper understanding of this critical issue.
+The report delves into the types of sexual attacks that have occurred, categorizing them to reveal patterns and trends. By mapping the geographical distribution of these events, we uncover insights into where they have taken place, offering valuable information for policymakers, law enforcement, and advocacy groups.
+In addition, we dissect the times at which they occurred. This temporal analysis can help stakeholders allocate resources more effectively and implement preventive measures during high-risk periods.
+Furthermore, the report investigates the sources of data on sexual-related cases, including news outlets and other organizations that collect and store this information.<br> Overall, this report serves as a visual resource to facilitate a data-driven approach to addressing sexual-related cases in Nepal.</p>
+''',unsafe_allow_html=True)
     fig_pie = px.pie(type_grp, values = 'No. of cases', names='Type of Attack',
                      title = '<span style="color:yellow">Pie chart showing attack categories.</span>',width= 500,color_discrete_sequence=px.colors.qualitative.Bold)
     fig_pie.update_traces(textposition = "outside", hoverinfo = 'value' )
@@ -112,11 +128,11 @@ if authentication_status:
     fig_pie4.update_traces(textposition = "outside", hoverinfo = 'value' )
     fig_pie4.update_layout(legend_title = 'Age groups',)
     fig_pie5 = px.pie(time_v, values = 'Total number', names='norm_time',
-                     title = '<span style="color:yellow">Pie chart showing the time with high peak for cases .</span>',width= 500,color_discrete_sequence=px.colors.qualitative.Bold)
+                     title = '<span style="color:yellow">Pie chart showing the time of attack.</span>',width=500,color_discrete_sequence=px.colors.qualitative.Bold)
     fig_pie5.update_traces(textposition = "outside", hoverinfo = 'value' )
-    #fig_pie5.show()
+    fig_pie5.update_layout(margin={"r":120,"t":80,"l":72,"b":120})
     fig_pie6 = px.pie(Caste_v, values = 'Total number', names='Ethnicity code',
-                     title = '<span style="color:yellow">Pie chart showing Ethnicity.</span>',width= 500,color_discrete_sequence=px.colors.qualitative.Bold)
+                     title = '<span style="color:yellow">Pie chart showing ethnicity of perpetrator.</span>',width= 500,color_discrete_sequence=px.colors.qualitative.Bold)
     fig_pie6.update_traces(textposition = "outside", hoverinfo = 'value' )
 
     col1.plotly_chart(fig_pie)
@@ -125,11 +141,13 @@ if authentication_status:
     col2.plotly_chart(fig_pie4)
     col1.plotly_chart(fig_pie5)
     col2.plotly_chart(fig_pie6)
-    st.write('''
-    ### Sources
+    expan = st.expander('Ethnicity codes')
+    expan.dataframe(caste_code,width=550)
+    st.markdown('''
+    ### <span style = 'color:Yellow'>Sources</span>
 
     Among various sources, we can first analyze the trend and pattern in which sources were highly active in covering the topic as well as which sources were more engaged over time.
-    ''')
+    ''',unsafe_allow_html=True)
     
     fig_bar = px.bar(source_grp, y = 'No. of Reports',
                 color = 'No. of Reports', color_continuous_scale=px.colors.sequential.Sunsetdark,width=1000)
@@ -165,11 +183,11 @@ a broader focus on all aspects of national events, whereas targeted news sources
 <p>Overall, the line plot demonstrates the dynamic nature of media reporting on sexual assault incidents in Nepal. Peaks and troughs in coverage from different news sources reflect shifts in priorities, societal awareness, and reporting methodologies. The analysis highlights the importance of considering multiple news sources to gain a comprehensive understanding of trends in sexual assault reporting and to identify potential changes in the prevalence of such incidents over time. Further exploration of contextual factors and correlations with real-world events could provide deeper insights into the patterns observed in the line plot.</p>
 ''',unsafe_allow_html=True)
     
-    st.write('''
-    ### Consequences of the attack
+    st.markdown('''
+    ### <span style = 'color:Yellow'>Consequences of the attack</span>
 
     Among all the districts, we can analyze the trend and pattern which districts were highly prone to which consequences.
-    ''')
+    ''',unsafe_allow_html=True)
     district_grp = pd.DataFrame(df.groupby(['Districts']).size())
     district_grp.columns = ['No. of Incidents']
     cons_grp = pd.DataFrame(df.groupby(['Districts','Consequences of the attack']).size().unstack(fill_value=0))
@@ -220,10 +238,10 @@ a broader focus on all aspects of national events, whereas targeted news sources
 <p>The data from Silyan creates an intriguing pattern-despite having fewer cases compared to districts like Kathmandu, the incident counts in Silyan remains steady or show an upward trend.</p>
 <p>In conclusion,the data analysis reveals that Kathmandu has consistently high cases of incidents,which is a cause for concern.The steady trend of incidents indicates a persistent issue that demands urgent attention and effective interventions to ensure the safety.</p>                       
 ''',unsafe_allow_html=True)
-    st.write('''
-    ### Time
-    Among all the time durations, we can observe the time at which the cases were high.
-    ''')
+    st.markdown('''
+    #### <span style = 'color:Yellow'>Time of attack</span>
+    Among all the time durations, we can observe the time patterns at which the events are likely occuring.
+    ''',unsafe_allow_html=True)
     df_v1= pd.DataFrame(Time.groupby('District').size())
     df_v1.columns = ['Total number']
     df2= df_v1.sort_values(by='Total number',ascending = False)
@@ -240,4 +258,11 @@ a broader focus on all aspects of national events, whereas targeted news sources
 <p>2-3 AM:In almost every district under scrutiny, the period between 2 AM and 3 AM emerges as the peak time for incidents. This late-night to early-morning hour appears to be associated with a heightened risk of various events. The reasons behind this phenomenon could be multifaceted, including reduced visibility, lower presence of individuals, and potentially altered social dynamics.</p>
 <p>13-14 (1 PM - 2 PM):Another time of increased incident occurrence across the surveyed districts is between 1 PM and 2 PM, notably in contrast to the early morning lull around 5 AM - 6 AM. This suggests that, for some reason, the early afternoon presents its own set of challenges or risk factors that contribute to incidents. Perhaps factors related to daily routines or social interactions play a role during this timeframe.</p>
 <p> However, it is important to note that there is significant variation when we delve into district-specific data. In the case of Kathmandu, for instance, a different pattern emerges. Incidents in Kathmandu appear to peak between 10 AM and 3 PM, with the highest concentration of incidents occurring from 10 PM to 11 PM.</p>
-''',unsafe_allow_html=True)                                                    
+''',unsafe_allow_html=True)       
+
+st.markdown('''
+### <span style = 'color:Yellow'>Conclusion</span>
+<p>In summation, our analysis reveals compelling insights into the landscape of sexual-related cases in Nepal. Terai emerges as the epicenter of these incidents, registering the highest number of cases, while sexual assault remains the predominant form of abuse reported. Delving into the temporal dimension, patterns emerge, with 02:00 am appearing as a peak time for perpetrators, whereas particularly in the Kathmandu valley it is during the afternoon. The repercussions of these incidents are substantial, with physical injuries and a notable number of pregnancy cases being prevalent consequences.
+</p><p>To combat this troubling trend, we propose several proactive measures. Firstly, the allocation of security personnel during these active time periods could enhance public safety. Secondly, organizing self-defense training programs in areas with a high incidents of physical injuries can empower potential victims to protect themselves. Finally, recognizing the significance of safe abortion services, especially in regions where pregnancy is a pronounced consequence, can provide essential support and care to those affected.
+</p><p>In conclusion, our findings underscore the urgency of addressing sexual-related cases in Nepal through a multifaceted approach that combines preventative measures, community support, and timely interventions to protect the well-being of individuals and the broader society.
+           </p> ''',unsafe_allow_html=True)                                      
