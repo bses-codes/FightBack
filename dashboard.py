@@ -260,7 +260,7 @@ a broader focus on all aspects of national events, whereas targeted news sources
 <p> However, it is important to note that there is significant variation when we delve into district-specific data. In the case of Kathmandu, for instance, a different pattern emerges. Incidents in Kathmandu appear to peak between 10 AM and 3 PM, with the highest concentration of incidents occurring from 10 PM to 11 PM.</p>
 ''',unsafe_allow_html=True)       
 
-st.markdown('''
+    st.markdown('''
 ### <span style = 'color:Yellow'>Conclusion</span>
 <p>In summation, our analysis reveals compelling insights into the landscape of sexual-related cases in Nepal. Terai emerges as the epicenter of these incidents, registering the highest number of cases, while sexual assault remains the predominant form of abuse reported. Delving into the temporal dimension, patterns emerge, with 02:00 am appearing as a peak time for perpetrators, whereas particularly in the Kathmandu valley it is during the afternoon. The repercussions of these incidents are substantial, with physical injuries and a notable number of pregnancy cases being prevalent consequences.
 </p><p>To combat this troubling trend, we propose several proactive measures. Firstly, the allocation of security personnel during these active time periods could enhance public safety. Secondly, organizing self-defense training programs in areas with a high incidents of physical injuries can empower potential victims to protect themselves. Finally, recognizing the significance of safe abortion services, especially in regions where pregnancy is a pronounced consequence, can provide essential support and care to those affected.
