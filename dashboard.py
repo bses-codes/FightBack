@@ -120,7 +120,7 @@ Furthermore, the report investigates the sources of data on sexual-related cases
                      title = '<span style="color:#EA7371">Pie chart showing the types of attack.</span>',width= 500,color_discrete_sequence=px.colors.qualitative.Bold)
     fig_pie2.update_traces(textposition = "outside", hoverinfo = 'value' )
     fig_pie3 = px.pie(age_p, values = 'Total number', names='norm_age',
-                     title = '<span style="color:#EA7371">Pie chart showing perputator age groups.</span>',width= 500,color_discrete_sequence=px.colors.qualitative.Bold)
+                     title = '<span style="color:#EA7371">Pie chart showing perpetrator age groups.</span>',width= 500,color_discrete_sequence=px.colors.qualitative.Bold)
     fig_pie3.update_traces(textposition = "outside", hoverinfo = 'value')
     fig_pie3.update_layout(legend_title = 'Age groups')
     fig_pie4 = px.pie(age_v, values = 'Total number', names='norm_age',
