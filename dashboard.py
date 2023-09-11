@@ -100,7 +100,7 @@ if authentication_status:
 
     dis = pd.read_csv('District.csv')
     dis.iloc[59,1] = 83.3789
-    map = px.scatter_geo(dis, lat='Latitude', lon='Longitude',width = 500, opacity = 0.3,template='plotly_dark',
+    map = px.scatter_geo(dis, lat='Latitude', lon='Longitude',width = 500,height=396, opacity = 0.3,template='plotly_dark',
                      hover_name='Districts',color='Number', size='Number',
                      title='<span style="color:#EA7371">Incidents in Nepal</span>', color_continuous_scale=px.colors.sequential.Sunsetdark)
     map.update_layout(geo = dict(scope = 'asia',resolution = 50,lataxis_range =[25,32],lonaxis_range = [78,90]),margin={"r":0,"t":25,"l":0,"b":0})
@@ -192,7 +192,7 @@ a broader focus on all aspects of national events, whereas targeted news sources
     district_grp.columns = ['No. of Incidents']
     cons_grp = pd.DataFrame(df.groupby(['Districts','Consequences of the attack']).size().unstack(fill_value=0))
     fig = px.bar(cons_grp, title = 'Bar plot of occurence of consequences',
-             color = 'Consequences of the attack', color_discrete_sequence=['Black','Blue','Green',px.colors.qualitative.T10[5],'Red'],width=1000)
+             color = 'Consequences of the attack', color_discrete_sequence=['Red',px.colors.qualitative.Pastel1[4],'Green',px.colors.qualitative.Dark24[22],'Yellow'],width=1000)
     fig.update_traces(width = 0.7)
     fig.update_layout(title_text="<span style='color:#EA7371'>Bar plot of Consequences of attack</span>")
     expander_1 = st.expander('Analysis -- Occurence of Consequences')
