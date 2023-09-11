@@ -102,7 +102,7 @@ if authentication_status:
     dis.iloc[59,1] = 83.3789
     map = px.scatter_geo(dis, lat='Latitude', lon='Longitude',width = 500, opacity = 0.3,template='plotly_dark',
                      hover_name='Districts',color='Number', size='Number',
-                     title='<span style="color:yellow">Incidents in Nepal</span>', color_continuous_scale=px.colors.sequential.Sunsetdark)
+                     title='<span style="color:#EA7371">Incidents in Nepal</span>', color_continuous_scale=px.colors.sequential.Sunsetdark)
     map.update_layout(geo = dict(scope = 'asia',resolution = 50,lataxis_range =[25,32],lonaxis_range = [78,90]),margin={"r":0,"t":25,"l":0,"b":0})
     col1,col2 = st.columns(2)
     col1.plotly_chart(map)
