@@ -47,7 +47,6 @@ if authentication_status:
     attemp_grp.columns = ['Attempted or Raped','No. of cases']
 
     p_age = pd.read_csv('P_age.csv')
-    p_age.drop('P ',axis = 1, inplace=True)
     p_age.dropna(inplace=True)
     p_age['Age'] = p_age['Age'].astype('int')
     p_age['norm_1'] = (p_age['Age']//10)*10 
@@ -63,7 +62,6 @@ if authentication_status:
     age_p.reset_index(inplace=True)
     
     v_age = pd.read_csv('V_age.csv')
-    v_age.drop('V',axis = 1, inplace=True)
     v_age.dropna(inplace=True)
     v_age['Age'] = v_age['Age'].astype('int')
     v_age['norm_1'] = (v_age['Age']//10)*10 
